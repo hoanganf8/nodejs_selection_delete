@@ -1,0 +1,38 @@
+<h2>Danh sách khách hàng</h2>
+<%- msg?.length ? `<div class="alert alert-${msgType?.length ? msgType: 'success'}">${msg}</div>`: ''; %>
+<form action="/customers/deletes" method="post" onsubmit="return confirm('Bạn có chắc chắn?')">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th width="5%">
+          <input type="checkbox" />
+        </th>
+        <th>Tên</th>
+        <th>Email</th>
+        <th>Trạng thái</th>
+        <th>Thời gian</th>
+        <th width="5%">Sửa</th>
+        <th width="5%">Xóa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% customers.forEach(({id, name, email, status, createdAt}) => { %>
+      <tr>
+        <td> <input type="checkbox" name="delete_item" class="customer-item" value="<%= id %>" /></td>
+        <td><%= name %></td>
+        <td><%= email %></td>
+        <td><%= +status === 1 ? 'Active': 'Inactive' %></td>
+        <td><%= moment(createdAt).format('DD/MM/YYYY HH:mm:ss'); %></td>
+        <td>
+          <a href="#" class="btn btn-warning">Sửa</a>
+        </td>
+        <td>
+          <a href="#" class="btn btn-danger">Xóa</a>
+        </td>
+      </tr>
+      <% }) %>
+
+    </tbody>
+  </table>
+  <button type="submit" class="btn btn-danger">Xóa đã chọn</button>
+</form>
